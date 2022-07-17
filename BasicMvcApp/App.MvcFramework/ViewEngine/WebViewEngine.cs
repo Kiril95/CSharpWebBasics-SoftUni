@@ -13,11 +13,11 @@ namespace App.MvcFramework.ViewEngine
 {
     public class WebViewEngine : IViewEngine
     {
-        public string GetHtml(string templateCode, object viewModel)
+        public string GetHtml(string templateCode, object viewModel, string user)
         {
             string csharpCode = GenerateCSharpFromTemplate(templateCode, viewModel);
             IView executableObject = GenerateExecutableCоde(csharpCode, viewModel);
-            string html = executableObject.ExecuteTemplate(viewModel);
+            string html = executableObject.ExecuteTemplate(viewModel, user);
 
             return html;
         }
@@ -51,10 +51,12 @@ namespace App.MvcFramework.ViewEngine
                 {
                     public class ViewClass : IView
                     {
-                        public string ExecuteTemplate(object viewModel)
+                        public string ExecuteTemplate(object viewModel, string user)
                         {
+                            var User = user;
                             var Model = viewModel as " + typeOfModel + @";
                             var html = new StringBuilder();
+
                             " + GetMethodBody(templateCode) + @"
                             return html.ToString();
                         }

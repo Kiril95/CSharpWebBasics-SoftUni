@@ -6,6 +6,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\App.MvcFramework\App.MvcFramework.csproj" />
 		<ProjectReference Include="..\WebServer.HTTP\WebServer.HTTP.csproj" />
 	</ItemGroup>
@@ -18,6 +27,12 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="Views\Shared\_Layout.cshtml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Views\Users\Login.cshtml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Views\Users\Register.cshtml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="wwwroot\css\bootstrap.min.css">
