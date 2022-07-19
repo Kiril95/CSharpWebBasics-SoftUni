@@ -20,6 +20,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Views\Cards\Add.cshtml">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Views\Cards\All.cshtml">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Views\Cards\Collection.cshtml">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="Views\Home\About.cshtml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
@@ -46,6 +55,9 @@
 		</None>
 		<None Update="wwwroot\img\cat.jpg">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="wwwroot\img\create-card.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="wwwroot\img\dog.jpg">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
