@@ -1,6 +1,5 @@
 ﻿using App.MvcFramework;
 using FirstMvcApp.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using WebServer.HTTP;
 

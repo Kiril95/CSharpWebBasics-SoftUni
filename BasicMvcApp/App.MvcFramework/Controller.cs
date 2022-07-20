@@ -79,7 +79,7 @@ namespace App.MvcFramework
             this.Request.Session.ContainsKey(UserIdSessionName) ?
             this.Request.Session[UserIdSessionName] : null;
 
-        private string PutViewInLayout(string viewContent, object viewModel = null)
+        public string PutViewInLayout(string viewContent, object viewModel = null)
         {
             var layout = System.IO.File.ReadAllText("Views/Shared/_Layout.cshtml");
             layout = layout.Replace("@RenderBody()", "____VIEW_GOES_HERE____");
