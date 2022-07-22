@@ -10,10 +10,6 @@ namespace FirstMvcApp.Controllers
     {
         private readonly ICardService cardService;
 
-        public CardsController()
-        {
-        }
-
         public CardsController(ICardService cardService)
         {
             this.cardService = cardService;
@@ -21,10 +17,10 @@ namespace FirstMvcApp.Controllers
 
         public HttpResponse All()
         {
-            if (!IsUserSignedIn())
-            {
-                return Redirect("/Users/Login");
-            }
+            //if (!IsUserSignedIn())
+            //{
+            //    return Redirect("/Users/Login");
+            //}
 
             var allCards = cardService.GetAll();
 
@@ -69,32 +65,31 @@ namespace FirstMvcApp.Controllers
 
         public HttpResponse Add()
         {
-            if (IsUserSignedIn())
-            {
-                return View();
-            }
-
-            return Redirect("/Users/Login");
+            //if (IsUserSignedIn())
+            //{
+            //    return View();
+            //}
+            return View();
+            //return Redirect("/Users/Login");
         }
 
         [HttpPost]
         public HttpResponse Add(AddCardInputModel input)
         {
-            if (!IsUserSignedIn())
-            {
-                return Redirect("/Users/Login");
-            }
+            //if (!IsUserSignedIn())
+            //{
+            //    return Redirect("/Users/Login");
+            //}
 
             try
             {
-                cardService.Create(input, GetUserId());
-                return Redirect("/Cards/All");
+                cardService.Create(input);
+                return Redirect("/");
             }
             catch (ArgumentException ae)
             {
                 return Error(ae.Message);
             }
         }
-
     }
 }

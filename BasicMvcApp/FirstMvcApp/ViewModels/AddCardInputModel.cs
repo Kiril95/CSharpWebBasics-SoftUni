@@ -8,9 +8,9 @@
 
         public string Keyword { get; set; }
 
-        public string Attack { get; set; }
+        public int Attack { get; set; }
 
-        public string Health { get; set; }
+        public int Health { get; set; }
 
         public string Description { get; set; }
     }

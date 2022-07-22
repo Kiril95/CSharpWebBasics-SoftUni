@@ -117,10 +117,20 @@ namespace App.MvcFramework.ViewEngine
 
             if (viewModel != null)
             {
+                if (viewModel.GetType().IsGenericType)
+                {
+                    var genericArguments = viewModel.GetType().GenericTypeArguments;
+                    foreach (var genericArgument in genericArguments)
+                    {
+                        compileResult = compileResult.AddReferences(MetadataReference.CreateFromFile(genericArgument.Assembly.Location));
+                    }
+                }
+
                 compileResult = compileResult.AddReferences(MetadataReference.CreateFromFile(viewModel.GetType().Assembly.Location));
             }
 
             var libraries = Assembly.Load(new AssemblyName("netstandard")).GetReferencedAssemblies();
+
             foreach (var library in libraries)
             {
                 compileResult = compileResult
@@ -146,6 +156,7 @@ namespace App.MvcFramework.ViewEngine
                     var assembly = Assembly.Load(byteAssembly);
                     var viewType = assembly.GetType("ViewNamespace.ViewClass");
                     var instance = Activator.CreateInstance(viewType);
+
                     return (instance as IView) ?? new ErrorView(new List<string> { "Instance is null!" }, csharpCode);
                 }
                 catch (Exception ex)

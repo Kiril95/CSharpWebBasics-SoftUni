@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net.Sockets;
-using System.Threading.Tasks;
 using System.Linq;
-using WebServer.HTTP.Enumerators;
 using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WebServer.HTTP
 {
-    public class HttpServer
+    public class HttpServer : IHttpServer
     {
         List<Route> routeTable;
 

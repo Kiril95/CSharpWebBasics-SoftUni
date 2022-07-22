@@ -16,7 +16,7 @@ namespace FirstMvcApp.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [StringLength(20, MinimumLength = 5)]
         public string Username { get; set; }
 
         [Required]

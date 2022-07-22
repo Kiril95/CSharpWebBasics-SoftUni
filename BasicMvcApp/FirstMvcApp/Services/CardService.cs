@@ -15,20 +15,20 @@ namespace FirstMvcApp.Services
             this.db = db;
         }
 
-        public void Create(AddCardInputModel input, string userId)
+        public void Create(AddCardInputModel input)
         {
             var card = new Card
             {
                 Name = input.Name,
-                Attack = int.Parse(input.Attack),
-                Health = int.Parse(input.Health),
+                ImageUrl = input.Image,
                 Keyword = input.Keyword,
+                Attack = input.Attack,
+                Health = input.Health,
                 Description = input.Description,
-                ImageUrl = input.Image
             };
 
             db.Cards.Add(card);
-            db.UserCards.Add(new UserCard { UserId = userId, CardId = card.Id });
+            //db.UserCards.Add(new UserCard { UserId = userId, CardId = card.Id });
 
             db.SaveChanges();
         }
@@ -37,12 +37,13 @@ namespace FirstMvcApp.Services
         {
             return db.Cards.Select(x => new CardViewModel
             {
+                Id = x.Id,
+                Name = x.Name,
+                ImageUrl = x.ImageUrl,
+                Keyword = x.Keyword,
                 Attack = x.Attack,
                 Health = x.Health,
-                ImageUrl = x.ImageUrl,
-                Description = x.Description,
-                Id = x.Id,
-                Keyword = x.Keyword,
+                Description = x.Description
             })
             .ToList();
         }
@@ -77,6 +78,7 @@ namespace FirstMvcApp.Services
             if (!db.UserCards.Any(x => x.CardId == cardId && x.UserId == userId))
             {
                 db.UserCards.Add(new UserCard { CardId = cardId, UserId = userId });
+
                 db.SaveChanges();
             }
         }

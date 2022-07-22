@@ -15,7 +15,7 @@ namespace FirstMvcApp.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(15)]
+        [StringLength(30, MinimumLength = 5)]
         public string Name { get; set; }
 
         [Required]
@@ -24,10 +24,10 @@ namespace FirstMvcApp.Models
         [Required]
         public string Keyword { get; set; }
 
-        [Required]
+        [Range(0, int.MaxValue)]
         public int Attack { get; set; }
 
-        [Required]
+        [Range(0, int.MaxValue)]
         public int Health { get; set; }
 
         [Required]

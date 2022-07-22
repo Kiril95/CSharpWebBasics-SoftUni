@@ -10,9 +10,6 @@ namespace FirstMvcApp.Controllers
     {
         private readonly IUserService userService;
 
-        public UsersController()
-        {
-        }
 
         public UsersController(IUserService userService)
         {

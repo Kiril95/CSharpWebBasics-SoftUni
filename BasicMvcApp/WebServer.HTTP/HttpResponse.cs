@@ -7,6 +7,8 @@ namespace WebServer.HTTP
 {
     public class HttpResponse
     {
+
+
         public HttpResponse(HttpStatusCode statusCode)
         {
             this.StatusCode = statusCode;

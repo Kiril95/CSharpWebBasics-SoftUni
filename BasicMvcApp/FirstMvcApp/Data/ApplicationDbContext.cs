@@ -25,7 +25,7 @@ namespace FirstMvcApp.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=BattleCards;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=.;Database=BattleCards;Trusted_Connection=True;Integrated Security=true;");
             }
         }
 

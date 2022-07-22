@@ -64,6 +64,9 @@
 		<None Update="wwwroot\img\guy.jpg">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="wwwroot\img\placeholder.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="wwwroot\js\bootstrap.bundle.min.js">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

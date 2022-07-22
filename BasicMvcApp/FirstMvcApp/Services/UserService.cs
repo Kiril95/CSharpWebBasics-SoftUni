@@ -39,9 +39,9 @@ namespace FirstMvcApp.Services
             return user.Id;
         }
 
-        private static string ComputeHash(string input)
+        private static string ComputeHash(string inputPassword)
         {
-            var bytes = Encoding.UTF8.GetBytes(input);
+            var bytes = Encoding.UTF8.GetBytes(inputPassword);
             using var hash = SHA512.Create();
             var hashedInputBytes = hash.ComputeHash(bytes);
             // Convert to text

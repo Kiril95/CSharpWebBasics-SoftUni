@@ -97,6 +97,7 @@ namespace WebServer.HTTP
 
             this.Body = bodyBuilder.ToString().TrimEnd('\n', '\r');
 
+            // Form handle        
             SplitParameters(this.Body, this.FormData);
             SplitParameters(this.QueryString, this.QueryData);
         }
@@ -110,6 +111,7 @@ namespace WebServer.HTTP
                 var parameterParts = parameter.Split(new[] { '=' }, 2);
                 var name = parameterParts[0];
                 var value = WebUtility.UrlDecode(parameterParts[1]);
+
                 if (!output.ContainsKey(name))
                 {
                     output.Add(name, value);
