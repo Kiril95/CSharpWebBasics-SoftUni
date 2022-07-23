@@ -5,7 +5,7 @@ namespace FirstMvcApp.Services
 {
     public interface ICardService
     {
-        void Create(AddCardInputModel input);
+        void Create(AddCardInputModel input, string userId);
 
         ICollection<CardViewModel> GetAll();
 

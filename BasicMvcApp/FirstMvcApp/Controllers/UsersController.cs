@@ -10,7 +10,6 @@ namespace FirstMvcApp.Controllers
     {
         private readonly IUserService userService;
 
-
         public UsersController(IUserService userService)
         {
             this.userService = userService;
@@ -36,6 +35,7 @@ namespace FirstMvcApp.Controllers
             }
 
             var userId = userService.GetUserId(username, password);
+
             if (string.IsNullOrEmpty(userId))
             {
                 return Error("Incorrect username or password");

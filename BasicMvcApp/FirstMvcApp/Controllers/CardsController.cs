@@ -17,10 +17,10 @@ namespace FirstMvcApp.Controllers
 
         public HttpResponse All()
         {
-            //if (!IsUserSignedIn())
-            //{
-            //    return Redirect("/Users/Login");
-            //}
+            if (!IsUserSignedIn())
+            {
+                return Redirect("/Users/Login");
+            }
 
             var allCards = cardService.GetAll();
 
@@ -65,25 +65,25 @@ namespace FirstMvcApp.Controllers
 
         public HttpResponse Add()
         {
-            //if (IsUserSignedIn())
-            //{
-            //    return View();
-            //}
-            return View();
-            //return Redirect("/Users/Login");
+            if (IsUserSignedIn())
+            {
+                return View();
+            }
+
+            return Redirect("/Users/Login");
         }
 
         [HttpPost]
         public HttpResponse Add(AddCardInputModel input)
         {
-            //if (!IsUserSignedIn())
-            //{
-            //    return Redirect("/Users/Login");
-            //}
+            if (!IsUserSignedIn())
+            {
+                return Redirect("/Users/Login");
+            }
 
             try
             {
-                cardService.Create(input);
+                cardService.Create(input, GetUserId());
                 return Redirect("/");
             }
             catch (ArgumentException ae)

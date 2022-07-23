@@ -10,11 +10,6 @@ namespace FirstMvcApp.Controllers
         [HttpGet("/")]
         public HttpResponse Index()
         {
-            if (IsUserSignedIn())
-            {
-                return Redirect("/Cards/All");
-            }
-
             var viewModel = new IndexViewModel();
             viewModel.CurrentYear = DateTime.UtcNow.Year;
             viewModel.Message = "Welcome to Battle Cards";

@@ -61,6 +61,16 @@ namespace App.MvcFramework
             return response;
         }
 
+        public string PutViewInLayout(string viewContent, object viewModel = null)
+        {
+            var layout = System.IO.File.ReadAllText("Views/Shared/_Layout.cshtml");
+            layout = layout.Replace("@RenderBody()", "____VIEW_GOES_HERE____");
+            layout = this.viewEngine.GetHtml(layout, viewModel, this.GetUserId());
+            var responseHtml = layout.Replace("____VIEW_GOES_HERE____", viewContent);
+
+            return responseHtml;
+        }
+
         protected void SignIn(string userId)
         {
             this.Request.Session[UserIdSessionName] = userId;
@@ -78,15 +88,5 @@ namespace App.MvcFramework
         protected string GetUserId() =>
             this.Request.Session.ContainsKey(UserIdSessionName) ?
             this.Request.Session[UserIdSessionName] : null;
-
-        public string PutViewInLayout(string viewContent, object viewModel = null)
-        {
-            var layout = System.IO.File.ReadAllText("Views/Shared/_Layout.cshtml");
-            layout = layout.Replace("@RenderBody()", "____VIEW_GOES_HERE____");
-            layout = this.viewEngine.GetHtml(layout, viewModel, this.GetUserId());
-            var responseHtml = layout.Replace("____VIEW_GOES_HERE____", viewContent);
-
-            return responseHtml;
-        }
     }
 }

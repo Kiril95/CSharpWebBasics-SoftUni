@@ -15,7 +15,7 @@ namespace FirstMvcApp.Services
             this.db = db;
         }
 
-        public void Create(AddCardInputModel input)
+        public void Create(AddCardInputModel input, string userId)
         {
             var card = new Card
             {
@@ -28,7 +28,7 @@ namespace FirstMvcApp.Services
             };
 
             db.Cards.Add(card);
-            //db.UserCards.Add(new UserCard { UserId = userId, CardId = card.Id });
+            db.UserCards.Add(new UserCard { UserId = userId, CardId = card.Id });
 
             db.SaveChanges();
         }
@@ -67,6 +67,7 @@ namespace FirstMvcApp.Services
 
         public void RemoveFromCollection(string cardId, string userId)
         {
+            // Finds the User's card that has both composite keys
             var userCard = db.UserCards.Find(userId, cardId);
             db.UserCards.Remove(userCard);
 
