@@ -41,11 +41,6 @@ namespace FirstMvcApp.Controllers
 
         public HttpResponse RemoveFromCollection(string cardId)
         {
-            if (!IsUserSignedIn())
-            {
-                return Redirect("/Users/Login");
-            }
-
             cardService.RemoveFromCollection(cardId, GetUserId());
 
             return Redirect("/Cards/Collection");
@@ -53,38 +48,35 @@ namespace FirstMvcApp.Controllers
 
         public HttpResponse AddToCollection(string cardId)
         {
+            try
+            {
+                cardService.AddToCollection(cardId, GetUserId());
+
+                return Redirect("/Cards/Collection");
+            }
+            catch (ArgumentException ae)
+            {
+                return Error(ae.Message);
+            }
+        }
+
+        public HttpResponse Add()
+        {
             if (!IsUserSignedIn())
             {
                 return Redirect("/Users/Login");
             }
 
-            cardService.AddToCollection(cardId, GetUserId());
-
-            return Redirect("/Cards/Collection");
-        }
-
-        public HttpResponse Add()
-        {
-            if (IsUserSignedIn())
-            {
-                return View();
-            }
-
-            return Redirect("/Users/Login");
+            return View();
         }
 
         [HttpPost]
         public HttpResponse Add(AddCardInputModel input)
         {
-            if (!IsUserSignedIn())
-            {
-                return Redirect("/Users/Login");
-            }
-
             try
             {
                 cardService.Create(input, GetUserId());
-                return Redirect("/");
+                return Redirect("/Cards/All");
             }
             catch (ArgumentException ae)
             {

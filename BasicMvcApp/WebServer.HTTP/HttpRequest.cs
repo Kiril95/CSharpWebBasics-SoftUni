@@ -97,7 +97,7 @@ namespace WebServer.HTTP
 
             this.Body = bodyBuilder.ToString().TrimEnd('\n', '\r');
 
-            // Form handle        
+            // Form and query handle        
             SplitParameters(this.Body, this.FormData);
             SplitParameters(this.QueryString, this.QueryData);
         }

@@ -29,7 +29,12 @@ namespace FirstMvcApp.Services
 
         public string Create(RegisterInputModel input)
         {
-            if (input.Username.Length < 5 || input.Username.Length > 20)
+            if (Regex.IsMatch(input.Username, @"\p{IsCyrillic}"))
+            {
+                throw new ArgumentException("Username must be in lattin letters.");
+            }
+
+            if (string.IsNullOrWhiteSpace(input.Username) || input.Username.Length < 5 || input.Username.Length > 20)
             {
                 throw new ArgumentException("Username must be between 5 and 20 characters long.");
             }
@@ -39,13 +44,23 @@ namespace FirstMvcApp.Services
             {
                 throw new ArgumentException("Email is not valid.");
             }
-            if (input.Password.Length < 6 || input.Password.Length > 20)
+            if (string.IsNullOrWhiteSpace(input.Password) || input.Password.Length < 6 || input.Password.Length > 20)
             {
                 throw new ArgumentException("Password must be between 6 and 20 characters long.");
             }
             if (input.Password != input.ConfirmPassword)
             {
                 throw new ArgumentException("Passwords do not match.");
+            }
+
+            // Check inside the db
+            if (db.Users.Any(u => u.Email == input.Email))
+            {
+                throw new ArgumentException("Email is already taken.");
+            }
+            if (db.Users.Any(u => u.Username == input.Username))
+            {
+                throw new ArgumentException("Username is already taken.");
             }
 
             User user = new User

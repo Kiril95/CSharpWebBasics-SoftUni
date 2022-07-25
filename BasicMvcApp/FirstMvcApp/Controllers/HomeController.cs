@@ -25,7 +25,7 @@ namespace FirstMvcApp.Controllers
                 SignOut();
             }
 
-            return this.Redirect("/Home/Index");
+            return this.Redirect("/");
         }
 
         public HttpResponse About()

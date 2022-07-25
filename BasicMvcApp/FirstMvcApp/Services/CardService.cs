@@ -1,8 +1,11 @@
 ﻿using FirstMvcApp.Data;
 using FirstMvcApp.Models;
 using FirstMvcApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FirstMvcApp.Services
 {
@@ -17,13 +20,53 @@ namespace FirstMvcApp.Services
 
         public void Create(AddCardInputModel input, string userId)
         {
+            StringBuilder errorBuilder = new StringBuilder();
+
+            if (Regex.IsMatch(input.Name, @"\p{IsCyrillic}"))
+            {
+                throw new ArgumentException("Name must be in lattin letters.");
+            }
+            if (string.IsNullOrWhiteSpace(input.Name) || input.Name.Length < 5 || input.Name.Length > 30)
+            {
+                errorBuilder.AppendLine("Name must be between 5 and 30 characters long.<br>");
+            };
+            if (string.IsNullOrWhiteSpace(input.Image))
+            {
+                errorBuilder.AppendLine("Image Url cannot be empty.<br>");
+            };
+            if (string.IsNullOrWhiteSpace(input.Keyword))
+            {
+                errorBuilder.AppendLine("You must chose a Keyword from the menu.<br>");
+            };
+            if (!int.TryParse(input.Attack, out _) || int.Parse(input.Attack) < 0)
+            {
+                errorBuilder.AppendLine("Attack must be a Non-Negative integer.<br>");
+            };
+            if (!int.TryParse(input.Health, out _) || int.Parse(input.Health) < 0)
+            {
+                errorBuilder.AppendLine("Health must be a Non-Negative integer.<br>");
+            };
+            if (string.IsNullOrWhiteSpace(input.Description) || input.Description.Length > 200)
+            {
+                errorBuilder.AppendLine("Description length cannot be empty or greater than 200 characters.<br>");
+            };
+            if (input.Description.Contains(@""""))
+            {
+                errorBuilder.AppendLine("Description field cannot contain double quotes.<br>");
+            }
+
+            if (errorBuilder.Length > 0)
+            {
+                throw new ArgumentException(errorBuilder.ToString().TrimEnd());
+            }
+
             var card = new Card
             {
                 Name = input.Name,
                 ImageUrl = input.Image,
                 Keyword = input.Keyword,
-                Attack = input.Attack,
-                Health = input.Health,
+                Attack = int.Parse(input.Attack),
+                Health = int.Parse(input.Health),
                 Description = input.Description,
             };
 
@@ -76,13 +119,14 @@ namespace FirstMvcApp.Services
 
         public void AddToCollection(string cardId, string userId)
         {
-            if (!db.UserCards.Any(x => x.CardId == cardId && x.UserId == userId))
+            if (db.UserCards.Any(x => x.CardId == cardId && x.UserId == userId))
             {
-                db.UserCards.Add(new UserCard { CardId = cardId, UserId = userId });
-
-                db.SaveChanges();
+                throw new ArgumentException("This card is already in your collection.");
             }
-        }
 
+            db.UserCards.Add(new UserCard { CardId = cardId, UserId = userId });
+
+            db.SaveChanges();
+        }
     }
 }
