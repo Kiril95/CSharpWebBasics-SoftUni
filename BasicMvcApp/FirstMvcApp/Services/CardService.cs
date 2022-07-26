@@ -105,6 +105,7 @@ namespace FirstMvcApp.Services
                     Id = x.Card.Id,
                     Keyword = x.Card.Keyword,
                 })
+                .OrderBy(x => x.Keyword)
                 .ToList();
         }
 
@@ -125,6 +126,25 @@ namespace FirstMvcApp.Services
             }
 
             db.UserCards.Add(new UserCard { CardId = cardId, UserId = userId });
+
+            db.SaveChanges();
+        }
+
+        public Card GetCard(string cardId)
+        {
+            return db.Cards.FirstOrDefault(x => x.Id == cardId);
+        }
+
+        public void SaveChanges(CardViewModel input, string cardId)
+        {
+            var targetCard = this.GetCard(cardId);
+
+            targetCard.Name = input.Name;
+            targetCard.ImageUrl = input.ImageUrl;
+            targetCard.Keyword = input.Keyword;
+            targetCard.Attack = input.Attack;
+            targetCard.Health = input.Health;
+            targetCard.Description = input.Description;
 
             db.SaveChanges();
         }

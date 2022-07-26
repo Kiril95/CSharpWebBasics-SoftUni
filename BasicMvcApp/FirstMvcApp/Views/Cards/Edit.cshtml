@@ -1,0 +1,61 @@
+﻿<h1 class="text-center mt-2">Edit Card</h1>
+<div class="row mt-4 mb-4">
+    <div id="card" class="card col-6 col-lg-3 game-card h-100 m-auto">
+        <img id="card-image"
+             src="@Model.ImageUrl"
+             class="card-img-top img-fluid card-image">
+        <div class="card-body">
+            <h5 id="card-name" class="card-title text-center" data-toggle="tooltip" data-placement="bottom"
+                title="Description:<br>@Model.Description">
+                @Model.Name
+            </h5>
+            <ul class="list-group list-group-flush">
+                <li id="card-keyword" class="list-group-item text-center">@Model.Keyword</li>
+                <li class="list-group-item">
+                    <span id="card-attack" class="attack-stat">@Model.Attack</span><span id="card-health" class="health-stat">@Model.Health</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <form class="col-6 col-lg-9" method="post">
+        <div class="form-group">
+            <label for="name-input">Name</label>
+            <input name="name" type="text" class="form-control" id="name-input" value="@Model.Name">
+        </div>
+        <div class="form-group">
+            <label for="image-input">Image URL</label>
+            <input name="imageUrl" type="text" class="form-control" id="image-input" value="@Model.ImageUrl">
+        </div>
+        <div class="form-group">
+            <label for="keyword-input">Keyword</label>
+            <select name="keyword" class="form-control" id="keyword-input">
+                <option value="@(Model.Keyword)" selected="@(Model.Keyword)">@(Model.Keyword)</option>
+                <option value="Tough">Tough</option>
+                <option value="Challenger">Challenger</option>
+                <option value="Elusive">Elusive</option>
+                <option value="Overwhelming">Overwhelming</option>
+                <option value="Fearsome">Fearsome</option>
+                <option value="Cunning">Cunning</option>
+                <option value="Brutal">Brutal</option>
+                <option value="Honorable">Honorable</option>
+                <option value="Godlike">Godlike</option>
+                <option value="Radiant">Radiant</option>
+                <option value="Humble">Humble</option>
+                <option value="Vengeful">Vengeful</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="attack-input">Attack</label>
+            <input name="attack" type="number" class="form-control" id="attack-input" value="@Model.Attack">
+        </div>
+        <div class="form-group">
+            <label for="health-input">Health</label>
+            <input name="health" type="number" class="form-control" id="health-input" value="@Model.Health">
+        </div>
+        <div class="form-group">
+            <label for="description-input">Description</label>
+            <textarea name="description" class="form-control" id="description-input">@Model.Description</textarea>
+        </div>
+        <button type="submit" class="btn btn-block btn-primary">Save Changes</button>
+    </form>
+</div>

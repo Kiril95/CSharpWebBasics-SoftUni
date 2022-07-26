@@ -1,4 +1,5 @@
-﻿using FirstMvcApp.ViewModels;
+﻿using FirstMvcApp.Models;
+using FirstMvcApp.ViewModels;
 using System.Collections.Generic;
 
 namespace FirstMvcApp.Services
@@ -14,5 +15,9 @@ namespace FirstMvcApp.Services
         void RemoveFromCollection(string cardId, string userId);
 
         void AddToCollection(string cardId, string userId);
+
+        Card GetCard(string cardId);
+
+        void SaveChanges(CardViewModel input, string cardId);
     }
 }
