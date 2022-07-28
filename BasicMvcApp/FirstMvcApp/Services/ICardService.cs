@@ -18,6 +18,6 @@ namespace FirstMvcApp.Services
 
         Card GetCard(string cardId);
 
-        void SaveChanges(CardViewModel input, string cardId);
+        void SaveChanges(AddCardInputModel input, string cardId);
     }
 }

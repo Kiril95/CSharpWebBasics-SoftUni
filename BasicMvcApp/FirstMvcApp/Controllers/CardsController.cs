@@ -94,7 +94,7 @@ namespace FirstMvcApp.Controllers
         }
 
         [HttpPost]
-        public HttpResponse Edit(CardViewModel input, string cardId)
+        public HttpResponse Edit(AddCardInputModel input, string cardId)
         {
             try
             {

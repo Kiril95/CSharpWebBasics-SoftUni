@@ -2,9 +2,11 @@
 {
     public class AddCardInputModel
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
-        public string Image { get; set; }
+        public string ImageUrl { get; set; }
 
         public string Keyword { get; set; }
 

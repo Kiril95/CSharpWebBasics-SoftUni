@@ -20,50 +20,17 @@ namespace FirstMvcApp.Services
 
         public void Create(AddCardInputModel input, string userId)
         {
-            StringBuilder errorBuilder = new StringBuilder();
+            var errors = this.ValidateCard(input);
 
-            if (Regex.IsMatch(input.Name, @"\p{IsCyrillic}"))
+            if (errors.Length > 0)
             {
-                throw new ArgumentException("Name must be in lattin letters.");
-            }
-            if (string.IsNullOrWhiteSpace(input.Name) || input.Name.Length < 5 || input.Name.Length > 30)
-            {
-                errorBuilder.AppendLine("Name must be between 5 and 30 characters long.<br>");
-            };
-            if (string.IsNullOrWhiteSpace(input.Image))
-            {
-                errorBuilder.AppendLine("Image Url cannot be empty.<br>");
-            };
-            if (string.IsNullOrWhiteSpace(input.Keyword))
-            {
-                errorBuilder.AppendLine("You must chose a Keyword from the menu.<br>");
-            };
-            if (!int.TryParse(input.Attack, out _) || int.Parse(input.Attack) < 0)
-            {
-                errorBuilder.AppendLine("Attack must be a Non-Negative integer.<br>");
-            };
-            if (!int.TryParse(input.Health, out _) || int.Parse(input.Health) < 0)
-            {
-                errorBuilder.AppendLine("Health must be a Non-Negative integer.<br>");
-            };
-            if (string.IsNullOrWhiteSpace(input.Description) || input.Description.Length > 200)
-            {
-                errorBuilder.AppendLine("Description length cannot be empty or greater than 200 characters.<br>");
-            };
-            if (input.Description.Contains(@""""))
-            {
-                errorBuilder.AppendLine("Description field cannot contain double quotes.<br>");
-            }
-
-            if (errorBuilder.Length > 0)
-            {
-                throw new ArgumentException(errorBuilder.ToString().TrimEnd());
+                throw new ArgumentException(errors);
             }
 
             var card = new Card
             {
                 Name = input.Name,
-                ImageUrl = input.Image,
+                ImageUrl = input.ImageUrl,
                 Keyword = input.Keyword,
                 Attack = int.Parse(input.Attack),
                 Health = int.Parse(input.Health),
@@ -135,18 +102,65 @@ namespace FirstMvcApp.Services
             return db.Cards.FirstOrDefault(x => x.Id == cardId);
         }
 
-        public void SaveChanges(CardViewModel input, string cardId)
+        public void SaveChanges(AddCardInputModel input, string cardId)
         {
+            var errors = this.ValidateCard(input);
+
+            if (errors.Length > 0)
+            {
+                throw new ArgumentException(errors);
+            }
+
             var targetCard = this.GetCard(cardId);
 
             targetCard.Name = input.Name;
             targetCard.ImageUrl = input.ImageUrl;
             targetCard.Keyword = input.Keyword;
-            targetCard.Attack = input.Attack;
-            targetCard.Health = input.Health;
+            targetCard.Attack = int.Parse(input.Attack);
+            targetCard.Health = int.Parse(input.Health);
             targetCard.Description = input.Description;
 
             db.SaveChanges();
+        }
+
+        private string ValidateCard(AddCardInputModel input)
+        {
+            StringBuilder errorBuilder = new StringBuilder();
+
+            if (Regex.IsMatch(input.Name, @"\p{IsCyrillic}"))
+            {
+                throw new ArgumentException("Name must be in lattin letters.");
+            }
+            if (string.IsNullOrWhiteSpace(input.Name) || input.Name.Length < 5 || input.Name.Length > 30)
+            {
+                errorBuilder.AppendLine("Name must be between 5 and 30 characters long.<br>");
+            };
+            if (string.IsNullOrWhiteSpace(input.ImageUrl))
+            {
+                errorBuilder.AppendLine("Image Url cannot be empty.<br>");
+            };
+            if (string.IsNullOrWhiteSpace(input.Keyword))
+            {
+                errorBuilder.AppendLine("You must chose a Keyword from the menu.<br>");
+            };
+            if (!int.TryParse(input.Attack, out _) || int.Parse(input.Attack) < 0)
+            {
+                errorBuilder.AppendLine("Attack must be a Non-Negative integer.<br>");
+            };
+            if (!int.TryParse(input.Health, out _) || int.Parse(input.Health) < 0)
+            {
+                errorBuilder.AppendLine("Health must be a Non-Negative integer.<br>");
+            };
+            if (string.IsNullOrWhiteSpace(input.Description) || input.Description.Length > 200)
+            {
+                errorBuilder.AppendLine("Description length cannot be empty or greater than 200 characters.<br>");
+            };
+            if (input.Description.Contains(@""""))
+            {
+                errorBuilder.AppendLine("Description field cannot contain double quotes.<br>");
+            }
+
+            return errorBuilder.ToString().TrimEnd();
         }
     }
 }
